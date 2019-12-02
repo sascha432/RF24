@@ -595,11 +595,11 @@ bool RF24::begin(void)
 
 	#if defined (MRAA)
 	  GPIO();
-	  gpio.begin(ce_pin,csn_pin);
+	  gpio.begin(ce_pin.getPin(), csn_pin.getPin());
 	#endif
 
     #ifdef RF24_RPi
-	  switch(csn_pin){     //Ensure valid hardware CS pin
+	  switch(csn_pin.getPin()){     //Ensure valid hardware CS pin
 	    case 0: break;
 	    case 1: break;
 	    // Allow BCM2835 enums for RPi
@@ -612,20 +612,20 @@ bool RF24::begin(void)
 	  }
     #endif
 
-    _SPI.begin(csn_pin);
+    _SPI.begin(csn_pin.getPin());
 
-	pinMode(ce_pin,OUTPUT);
+	ce_pin.pinMode(OUTPUT);
 	ce(LOW);
 
 	delay(100);
 
   #elif defined(LITTLEWIRE)
-    pinMode(csn_pin,OUTPUT);
+    csn_pin.pinMode(OUTPUT);
     _SPI.begin();
     csn(HIGH);
   #elif defined(XMEGA_D3)
 	if (ce_pin != csn_pin) ce_pin.pinMode(OUTPUT);
-	_SPI.begin(csn_pin);
+	_SPI.begin(csn_pin.getPin());
 	ce(LOW);
 	csn(HIGH);
 	delay(200);
