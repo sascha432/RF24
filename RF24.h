@@ -65,8 +65,8 @@ private:
   GPIO gpio;
 #endif
 
-  DigitalPin ce_pin; /**< "Chip Enable" pin, activates the RX or TX role */
-  DigitalPin csn_pin; /**< SPI Chip select */
+  DigitalPin &ce_pin; /**< "Chip Enable" pin, activates the RX or TX role */
+  DigitalPin &csn_pin; /**< SPI Chip select */
   uint16_t spi_speed; /**< SPI Bus Speed */
 #if defined (RF24_LINUX) || defined (XMEGA_D3)
   uint8_t spi_rxbuff[32+1] ; //SPI receive buffer (payload max 32 bytes)
@@ -108,7 +108,7 @@ public:
    * @param _cepin The pin attached to Chip Enable on the RF module
    * @param _cspin The pin attached to Chip Select
    */
-  RF24(DigitalPin _cepin, DigitalPin _cspin);
+  RF24(DigitalPin &_cepin, DigitalPin &_cspin);
   //#if defined (RF24_LINUX)
 
     /**
@@ -122,7 +122,7 @@ public:
   * @param spispeed For RPi, the SPI speed in MHZ ie: BCM2835_SPI_SPEED_8MHZ
   */
 
-  RF24(DigitalPin _cepin, DigitalPin _cspin, uint32_t spispeed );
+  RF24(DigitalPin &_cepin, DigitalPin &_cspin, uint32_t spispeed );
   //#endif
 
   #if defined (RF24_LINUX)
